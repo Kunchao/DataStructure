@@ -1,0 +1,96 @@
+#include <stdio.h>
+#include <stdlib>
+
+#define ElemType int
+
+typedef struct node{
+	ElemType data;
+	struct node *next;
+}LNode, *LinkedList;
+
+LinkedList ListInit(){
+	LinkedList L;
+	L=(LinkedList)malloc(sizeof(LNode));
+	if(L==NULL){
+		printf("Memory not enough");
+		exit(0);
+	}
+	L->next = NULL;
+	return L;
+}
+
+LinkedList CreateList(LinkedList &L){
+	LNode *s;int x;
+	L=(LinkedList)malloc(sizeof(LNode));
+	L->next=NULL;
+	scanf("%d", &x);
+	while(x!=9999){
+		s =  (LinkedList)malloc(sizeof(LNode));
+		s->data=x;
+		s->next=L->next;
+		L->next=s;
+		scanf("%d",&x);
+	}
+	return L;
+}
+
+int LsitLen(LinkedList L){
+	int i=0;
+	LinkedList p=L->next;
+	while(p){
+		i++;
+		p->next;
+	}
+	return i;
+}
+
+LinkedList GetElem(LinkedList &L, int i){
+	int j=1;
+	LinkedList p=L->next;
+	if(i==0){
+		return L;
+	}
+	if(i<1){
+		return NULL;
+	}
+	while(p&&j<i){
+		p=p->next;
+		j++;
+	}
+	return p;
+}
+void ListInsert(LinkedList &L, int i, ElemType x){
+	LinkedList p=GetElem(L, i-1);
+	LNode *s;
+	s=(LinkedList)malloc(sizeof(LNode));
+	s->data=x;
+	s->next=p->next;
+	p->next=s;
+}
+
+void ListDelete(LinkedList &L, int i){
+	LinkedList p=GetElem(L,i-1);
+	q=p->next;
+	p->next=q->next;
+	free(q);
+}
+
+void ListPrint(LinkedList &L){
+	LinkedList p= L->next;
+	while(p){
+		printf("%d",p->data);
+	}
+}
+
+int main(){
+	LinkedList L;
+	L=ListInit();
+	printf("创建一个列表：");
+	CreateList(L);
+	ListPrint(L);
+	printf("第一个位置上插入10：");
+	ListInsert(L,1,10);
+	ListPrint(L);
+	printf("删除第三个元素：");
+	ListDelete(L,3);
+	(t)y
